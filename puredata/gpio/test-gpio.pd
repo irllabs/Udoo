@@ -1,0 +1,11 @@
+#N canvas 32 593 450 300 10;
+#X msg 110 19 output 1;
+#X obj 16 188 gpio 88;
+#X msg 237 31 enable 1;
+#X msg 110 82 open 1;
+#X obj 242 126 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X connect 0 0 1 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;

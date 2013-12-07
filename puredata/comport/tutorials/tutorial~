@@ -1,0 +1,103 @@
+This tutorial explains how to get set up using the Arduino built in to your UDOO with Pure Data. It is geared towards people that are not used to interfacing with a computer through the command line (as God intended) so forgive me if this is pedantic. On the other hand, if I am unclear, please let me know (dmedine(at)ucsd.edu).
+
+First of all, you need the Arduino IDE on your UDOO. As far as I know, the latest version of the Linaro OS for UDOO ships with the Arduino IDE (it did  the last time I installed it, anyway). Otherwise download the IDE from the UDOO downloads page and install it on your system.
+
+The tricky thing is that you have to link an extra serial port in your /dev directory. The correct way to do this is to type 
+
+> sudo ln -sf /dev/ttymxc3 /dev/ttyS0
+
+on your command line and enter your password. If you want this to happen automatically every time you start your UDOO, add the line above (without the 'sudo' part) to the file /etc/rc.local. You will have to use su privilege to do this:
+
+> sudo gedit /etc/rc.local 
+
+gedit being my text editor of choice for these things. If you don't have gedit, you can get it (get it? ha ha!) by typing:
+
+> sudo apt-get install gedit
+
+Ok. Now when you open up the Arduino IDE, you should have the ability to choose the port /dev/ttyS0 from the pull down menu Tools->Port. If not, quit the IDE and try again. If not still, you probably skipped a step before (remember, rc.local only happens on startup, so you have to either reboot or create the virtual port by hand). Also this port can clogged up during developement cycles. I have had to reboot a lot. I'm new to Arduino, so maybe this is par for the course. I don't know.
+
+Now, you can make a very simple sketch to test everything out.
+
+code:
+
+void setup(){
+  Serial.setup(9600);
+}
+
+void loop(){
+
+  Serial.println("Hello, world!");
+  delay(1000);
+
+}
+
+This code will send the values that make up the message "Hello, world!") over the port /dev/ttyS0 every second for ever and ever and ever and ever ...
+
+To test that everything is hunky-dory, whang on a terminal and do the following:
+
+> exec 3<>/dev/ttyS0
+
+This informs the os that the port /dev/ttyS0 is file descriptor '3'. Then you can see what's going on in the port by typing
+
+> cat <&3
+
+This should print out "Hello, world!" the number of times seconds went by since you launched your Arduino sketch.
+
+BTW, you'll want to be careful about closing down the serial connection after you are done using it. Otherwise you will have trouble reprogramming your Arduino across the port.
+
+> exec 3>&-
+
+The above will close this file descriptor.
+
+So, presuming this is working, it's time get Pd going. There is a nice tutorial on how to get started with Pd-extended on the UDOO forums: here (note: insert link).
+
+I myself prefer Pd vanilla (it's light weight and I know everything that is there). The issue is that Pd-vanilla doesn't have any object to read or write off of a serial port. For that we will need a special object (that ships with Pd-extended) called [comport]. This is no problem, it just means a couple extra steps, if you want to use Pd vanilla, only. If you prefer Pd-extended, follow the steps in the link above and skip until I get done talking about how to build and install Pd and [comport].
+
+You can download Pd vanilla from:
+http://msp.ucsd.edu/software.html 
+Choose 'Pd version 0.45-4 (source) and download the tarball. Extract it to whatever folder you wish. Then:
+
+> cd /<path>/pd-0.45-4/src
+
+(where <path> is whatever folder you extracted Pd into), and hit
+
+> make -f makefile.gnu
+
+Go do something else for 4 or 5 minutes. When that is over, cd into pd's bin directory:
+
+> cd ../bin
+
+and look at it.
+
+> ls
+
+There should be a bunch of executables including one called 'pd'. To start up Pd, (provided you are in that folder)
+
+> ./pd
+
+Now, if you did this, rather than the pd-extended install method mentioned above, you will need to download and make the object [comport], by Martin Peach. Go to http://puredata.info/downloads/comport and click the download link. Extract the tarball into the directory of your choosing and cd into the comport-0.2 folder that is now there.
+
+You will have to make one alteration to the Makefile. You need to tell make where the file m_pd.h is. This file is in pd's src directory that we visited before when we built pd. So, to do this, under the line in the Makefile that says:
+
+CFLAGS = -I"$(PD_INCLUDE)/pd" -Wall -W -g
+
+add a line that says this:
+
+CFLAGS += -I/<path>/pd-0.45-4/src
+
+where, again, <path> is the directory that you put Pd in when you extracted it. On my UDOO, I made a directory called Software in my home folder, so my Makefile for comport has this in it:
+
+CFLAGS += -I/home/ubuntu/Software/pd-0.45-4/src
+
+Save the Makefile and hit: 
+
+> make
+
+It should compile without errors. So now, all that is left is to tell Pd where the binary for the [comport] object lives. To do this, open up pd (cd into the bin folder and hit ./pd). Navigate to the menu Edit->preferences->path... and add the path that you put your comport-0.2 folder into. The 'New...' button opens up a gui so you can navigate there. Make sure the 'Use standard extensions' box is checked. Then click Apply and hit OK. Now you have [comport] in Pd vanilla.
+
+Presumably your simple Arduino sketch that prints out "Hello, world!" is still running. Open up this patch (note insert link) in Pd and see that it works. Obviously, one must finesse Pd into receiving the data in a form you prefer. Programming is fun!
+
+At this point, if you are at all familiar with Arduino and Pd, you should have all you need to use your Arduino as a control mechanism for Pd on UDOO. Be careful not to access pins via the OS (ie with gpio object for Pd) whilst running an Arduino sketch that uses the same pins. This will damage your board. Another disclaimer, close down your connection to /dev/ttyS0 before putting a new sketch on your Arduino over the serial port. ttyS0 is doing double duty as a communications relay, and the port through which we upload sketches to the SAMx. If you have problems, a power cycle never hurts. 
+
+
+

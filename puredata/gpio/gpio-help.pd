@@ -1,0 +1,31 @@
+#N canvas 32 593 661 400 10;
+#X msg 16 50 output 1;
+#X obj 16 188 gpio 88;
+#X msg 16 -10 open 1;
+#X obj 132 173 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 16 14 open 0;
+#X msg 16 73 output 0;
+#X obj 154 -49 loadbang;
+#X obj 154 -27 t b b;
+#X text 245 -88 gpio is a pd extern by Miller Puckette. The make file
+was adjusted slightly for building on the UDOO board by David Medine
+;
+#X text 242 -23 This patch demonstrates your basic led on/off configuration.
+This first thing you must know is what pin corresponds to what gpio
+number. gpio 88 corresponds to pin 53 on the UDOO board. You can download
+a map of these relationships from the UDOO site.;
+#X text 240 56 In the current UDOO kernel \, all the gpios are already
+enabled by linux will enable right away once they have been unenabled.
+I don't know why \, but this is so. So you don't have to enable them.
+But \, you do have to open the pin's file : open 1 \, and set it to
+output mode: output 1 The patch is set up to do that on startup;
+#X text 238 170 Then you can toggle your led on and off.;
+#X connect 0 0 1 0;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;
+#X connect 5 0 1 0;
+#X connect 6 0 7 0;
+#X connect 7 0 0 0;
+#X connect 7 1 2 0;
