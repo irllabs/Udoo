@@ -1,0 +1,83 @@
+#N canvas 243 378 1103 617 10;
+#X msg 82 0 close;
+#X msg 30 -51 devicename /dev/ttyS0;
+#X msg 60 -29 devices;
+#X obj 60 51 comport 0 9600;
+#X obj 60 244 makefilename %c;
+#X obj 60 290 list trim;
+#X obj 60 335 print ascii;
+#X obj 60 266 t l b;
+#X obj 182 36 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 435 212 5 0 0 0 - - -, f 5;
+#X obj 60 312 spigot;
+#X obj 169 297 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 484 211 5 0 100 0 - - -, f 5;
+#X obj 484 230 * 0.01;
+#X obj 440 256 *;
+#X msg 529 193 15;
+#X obj 530 161 loadbang;
+#X obj 440 278 +;
+#X obj 540 271 f;
+#X obj 486 278 t b f;
+#X obj 540 293 *;
+#X obj 609 281 -;
+#X obj 615 258 1;
+#X obj 484 252 t b f;
+#X floatatom 609 303 5 0 0 0 - - -, f 5;
+#X floatatom 439 339 5 0 0 0 - - -, f 5;
+#X text 483 338 not really sufficient . . .;
+#X text 587 155 one pole data smoothing :;
+#X text 588 176 y = a * x + (1-a) * y_minus_1;
+#X text 536 229 a needs to be between 0 and 1 for the filter to be
+stable;
+#X text 191 296 printout to pd console if you wish;
+#X text 109 -28 print list of available ports;
+#X text 169 -50 connect to serial port /dev/ttyS0;
+#X text 573 64 This abstraction is designed to receive bytes from the
+Serial.println method. It works because println sends bytes valued
+13 and 10 at the end of each printout. The abstraction uses this as
+a cue to do its thing. Do yourself a favor and don't look inside!;
+#X text 199 36 this should toggle pin 53;
+#X obj 435 68 byte_trans_abs 13 10;
+#X text 396 -178 This patch demonstrates using comport to send and
+receive data to arduino using Martin Peach's [comport] object. It works
+in connection with the sketch titled basic_serial_IO. In that sketch
+\, pin 53 is activated as digital out and A7 is used as for ADC. So
+\, if you have that sketch loaded on your Arduino and have an LED correctly
+connected between pin 53 \, it should go on/off when you toggle the
+switch. Connect the leads of a pot to GND and 3.3 and the wiper to
+A7 and you should be able to read off the Arduino as well.;
+#X text 119 -1 close connection - make sure to do this before trying
+to upload a new sketch!;
+#X connect 0 0 3 0;
+#X connect 1 0 3 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 3 0 35 0;
+#X connect 4 0 7 0;
+#X connect 5 0 10 0;
+#X connect 7 0 5 0;
+#X connect 8 0 3 0;
+#X connect 9 0 14 0;
+#X connect 10 0 6 0;
+#X connect 11 0 10 1;
+#X connect 12 0 13 0;
+#X connect 13 0 14 1;
+#X connect 13 0 23 0;
+#X connect 14 0 17 0;
+#X connect 15 0 12 0;
+#X connect 16 0 15 0;
+#X connect 17 0 19 0;
+#X connect 17 0 25 0;
+#X connect 18 0 20 0;
+#X connect 19 0 18 0;
+#X connect 19 1 18 1;
+#X connect 20 0 17 1;
+#X connect 21 0 24 0;
+#X connect 22 0 21 0;
+#X connect 23 0 22 0;
+#X connect 23 1 21 1;
+#X connect 24 0 20 1;
+#X connect 35 0 9 0;

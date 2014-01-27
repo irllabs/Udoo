@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>4 Data back and forth between Pd and Arduino‣ Setting up UDOO to work with Pd: using [gpio] and [comport]</title>
+<!--Generated on Sun Jan 26 13:13:35 2014 by LaTeXML (version 0.7.9alpha) http://dlmf.nist.gov/LaTeXML/.-->
+<!--Document created on January 26, 2014.-->
+
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
+<link rel="stylesheet" href="LaTeXML.css" type="text/css"/>
+<link rel="stylesheet" href="ltx-article.css" type="text/css"/>
+<link rel="up" href="tutorial.xhtml" title="Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="start" href="tutorial.xhtml" title="Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="prev" href="S3.xhtml" title="3 Getting [comport] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="next" href="S5.xhtml" title="5 Building and Using [gpio] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S1.xhtml" title="1 Putting Pd on UDOO ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S2.xhtml" title="2 Setting up serial link between Arduino and Linux ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S3.xhtml" title="3 Getting [comport] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S5.xhtml" title="5 Building and Using [gpio] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_header">
+<div><a href="tutorial.xhtml" title="Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="up"><span class="ltx_text ltx_ref_title">Setting up UDOO to work with Pd: using [gpio] and [comport]</span></a><a href="S3.xhtml" title="3 Getting [comport] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="prev"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3 </span>Getting [comport]</span></a><a href="S5.xhtml" title="5 Building and Using [gpio] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="next"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5 </span>Building and Using [gpio]</span></a>
+</div></div>
+<div class="ltx_page_content">
+<div class="ltx_section">
+<h1 class="ltx_title ltx_title_section"><span class="ltx_tag ltx_tag_section">4 </span>Data back and forth between Pd and Arduino</h1>
+<div class="ltx_date ltx_role_creation"/>
+
+<div id="p1" class="ltx_para">
+<p class="ltx_p">I have also created a Pd patch and associated Arduio sketch called ‘basic_serial_io’. The Pd patch and associated Arduino sketch can be found in this directory as well. The folder is the Arduino sketch which you should be able to open up with the Arduino IDE. The Pd patch is the file that (duh) ends in ‘.pd’.</p>
+</div>
+<div id="p2" class="ltx_para">
+<p class="ltx_p">The sketch is set up to use pin A7 as an ADC input and 53 as a digital output. The patch is pretty self explanatory, so I won’t go in to details here.</p>
+</div>
+<div id="p3" class="ltx_para">
+<p class="ltx_p">One note, this patch relies on an abstraction that I wrote called ‘byte_trans_abs’. This should be in the same directory as all the rest of the files associated with this tutorial – a quick link is here: <a href="byte_trans_abs.pd" title="" class="ltx_ref ltx_url"><span class="ltx_text ltx_font_typewriter">byte_trans_abs.pd</span></a>. The abstraction takes in n number of bytes and translates them into an integer value.</p>
+</div>
+<div id="p4" class="ltx_para">
+<p class="ltx_p">This abstraction works by knowing that the method Serial.println in Arduino will terminate a transmission of <em class="ltx_emph">n</em> number of bytes with the ascii characters 13 then 10. These characters are used as cues to know that the data is done coming in and that it is time to translate the word into an integer. I made these cues arguments tot he abstraction so that one can provide any cue to end a transmission. It is a lot harder to translate characters into words with Pd than it is to translate a stream of single values between 0 and 9 into the correct integer. This would be a challenging and useful Pd patch to create!</p>
+</div>
+</div>
+</div>
+<div class="ltx_page_footer">
+<div><a href="S3.xhtml" title="3 Getting [comport] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="prev"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3 </span>Getting [comport]</span></a><a href="S5.xhtml" title="5 Building and Using [gpio] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="next"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5 </span>Building and Using [gpio]</span></a>
+</div>
+<div class="ltx_page_logo">Generated  on Sun Jan 26 13:13:35 2014 by <a href="http://dlmf.nist.gov/LaTeXML/">LaTeXML <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="[LOGO]"/></a></div></div>
+</div>
+</body>
+</html>
