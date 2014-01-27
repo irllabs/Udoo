@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>5 Building and Using [gpio]‣ Setting up UDOO to work with Pd: using [gpio] and [comport]</title>
+<!--Generated on Sun Jan 26 13:13:35 2014 by LaTeXML (version 0.7.9alpha) http://dlmf.nist.gov/LaTeXML/.-->
+<!--Document created on January 26, 2014.-->
+
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
+<link rel="stylesheet" href="LaTeXML.css" type="text/css"/>
+<link rel="stylesheet" href="ltx-article.css" type="text/css"/>
+<link rel="up" href="tutorial.xhtml" title="Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="start" href="tutorial.xhtml" title="Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="prev" href="S4.xhtml" title="4 Data back and forth between Pd and Arduino ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S1.xhtml" title="1 Putting Pd on UDOO ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S2.xhtml" title="2 Setting up serial link between Arduino and Linux ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S3.xhtml" title="3 Getting [comport] ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+<link rel="section" href="S4.xhtml" title="4 Data back and forth between Pd and Arduino ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]"/>
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_header">
+<div><a href="tutorial.xhtml" title="Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="up"><span class="ltx_text ltx_ref_title">Setting up UDOO to work with Pd: using [gpio] and [comport]</span></a><a href="S4.xhtml" title="4 Data back and forth between Pd and Arduino ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="prev"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4 </span>Data back and forth between Pd and Arduino</span></a>
+</div></div>
+<div class="ltx_page_content">
+<div class="ltx_section">
+<h1 class="ltx_title ltx_title_section"><span class="ltx_tag ltx_tag_section">5 </span>Building and Using [gpio]</h1>
+<div class="ltx_date ltx_role_creation"/>
+
+<div id="p1" class="ltx_para">
+<p class="ltx_p">[gpio] is an extern for Pd written by Miller Puckette, originally for the Raspberry Pi. It allows the user to specify a gpio pin and set its mode. So far only digital pins are supported. I modified the Makefile so that it will build easily on UDOO. In order to build it, download the folder from either here from github <a href="https://github.com/cmuartfab/Udoo" title="" class="ltx_ref ltx_url"><span class="ltx_text ltx_font_typewriter">https://github.com/cmuartfab/Udoo</span></a> and put it in Pd’s extra folder:
+<br class="ltx_break"/></p>
+</div>
+<div id="p2" class="ltx_para">
+<p class="ltx_p">&gt; mv -f /&lt;path to gpio&gt;/gpio/ /&lt;path to pd&gt;/pd-0.45-4/extra/gpio/
+<br class="ltx_break"/></p>
+</div>
+<div id="p3" class="ltx_para">
+<p class="ltx_p">This should move the folder and all its contents into pd’s extra folder. cd into that directory and hit:
+<br class="ltx_break"/></p>
+</div>
+<div id="p4" class="ltx_para">
+<p class="ltx_p">&gt; make
+<br class="ltx_break"/></p>
+</div>
+<div id="p5" class="ltx_para">
+<p class="ltx_p">BTW, you may have noticed that every time you build anything on UDOO you get a warning about a ‘clock skew’ at the end of the build. This is because your UDOO boots up thinking that it is 0:00 January 1, 1970 GMT. If you want the clock to reflect current GMT, you can force it to:
+<br class="ltx_break"/></p>
+</div>
+<div id="p6" class="ltx_para">
+<p class="ltx_p">&gt; sudo ntpdate ntp.ubuntu.com
+<br class="ltx_break"/></p>
+</div>
+<div id="p7" class="ltx_para">
+<p class="ltx_p">If ntpdate is not installed, you can get it:
+<br class="ltx_break"/></p>
+</div>
+<div id="p8" class="ltx_para">
+<p class="ltx_p">&gt; sudo apt-get install ntpdate
+<br class="ltx_break"/></p>
+</div>
+<div id="p9" class="ltx_para">
+<p class="ltx_p">This doesn’t really make a difference unless, like me, you are super-OCD about this kind of thing. Anyway, [gpio] should have built and there should be a binary called ‘gpio.l_arm’ in the directory. You won’t need to tell Pd about where this folder is, because Pd already knows about its extra folder and everything in it.
+<br class="ltx_break"/></p>
+</div>
+<div id="p10" class="ltx_para">
+<p class="ltx_p">To test it out, simply make a new Pd patch and create the object [gpio]. I wrote a little help patch to show how to get started with digital outs. To see it, do the usual right-click on the object and select the help patch. This is an on going project so it should grow over time as new modes etc are implemented.
+<br class="ltx_break"/></p>
+</div>
+<div id="p11" class="ltx_para">
+<p class="ltx_p">One word of warning. It is potentially dangerous to your UDOO to access the pins from both the Linux operating system (which is what [gpio] does) and the Arduino chip itself. Check the UDOO manual for details. Also, be very careful not to plug in any power supply greater than 3.3 volts into any of the pins. This could straight-up fry your processor and ruin your board.</p>
+</div>
+</div>
+</div>
+<div class="ltx_page_footer">
+<div><a href="S4.xhtml" title="4 Data back and forth between Pd and Arduino ‣ Setting up UDOO to work with Pd: using [gpio] and [comport]" class="ltx_ref" rel="prev"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4 </span>Data back and forth between Pd and Arduino</span></a>
+</div>
+<div class="ltx_page_logo">Generated  on Sun Jan 26 13:13:35 2014 by <a href="http://dlmf.nist.gov/LaTeXML/">LaTeXML <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="[LOGO]"/></a></div></div>
+</div>
+</body>
+</html>

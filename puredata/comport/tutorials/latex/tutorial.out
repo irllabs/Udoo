@@ -1,0 +1,5 @@
+\BOOKMARK [1][-]{section.1}{Putting Pd on UDOO}{}% 1
+\BOOKMARK [1][-]{section.2}{Setting up serial link between Arduino and Linux}{}% 2
+\BOOKMARK [1][-]{section.3}{Getting [comport]}{}% 3
+\BOOKMARK [1][-]{section.4}{Getting Data out of Pd, into Arduino}{}% 4
+\BOOKMARK [1][-]{section.5}{Building and Using [gpio]}{}% 5
