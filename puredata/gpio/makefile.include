@@ -1,4 +1,4 @@
-current: l_i386 l_ia64 l_arm
+current: l_arm
 
 # ----------------------- Windows -----------------------
 
@@ -27,7 +27,7 @@ l_i386: $(NAME).l_i386
 l_ia64: $(NAME).l_ia64
 l_arm: $(NAME).l_arm
 
-.SUFFIXES: .l_i386 .l_ia64 .l_arm
+.SUFFIXES: .l_arm
 
 LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
     -fno-strict-aliasing -Wall -W -Wshadow -Wstrict-prototypes \

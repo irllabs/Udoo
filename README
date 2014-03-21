@@ -1,0 +1,15 @@
+This is the branch that I (David Medine) made of the cmuartfab/Udoo repository.
+
+Inside you will find three folders: comport/ gpio/ and tutorials/. The former utilities for interfacing your Udoo peripherals with Miller Puckette's audio programming environment Pure Data http://msp.ucsd.edu. 
+
+tutorials/ has a directory called pd_comport_gpio/. Here you will find a file called tutorial.xhtml that steps through getting started with all this stuff. Example patches and Arduino sketches are included.
+
+More Udoo/Pd related tutorials are coming.
+
+[gpio] is an external authored by Puckette. David Medine has adjusted the makefile so that it will build on Udoo. 
+
+[comport] is a serial data transfer extern developed by Martin Peach: http://puredata.info/downloads/comport/releases/0.2. 
+
+Please email me with any quistions or concerns: dmedine@ucsd.edu.
+
+Thank you to Brendan Gaffney for proofreading and suggestions on the tutorial. 

@@ -1,0 +1,9 @@
+This is the David Medine branch of the cmuartfab/Udoo repository.
+
+Inside you will find three folders, comport, gpio, and tutorials. These are utilities for interfacing your Udoo peripherals with Miller Puckette's audio programming environment Pure Data http://msp.ucsd.edu.
+
+[gpio] is an external authored by Puckette. David Medine has adjusted the makefile so that it will build on Udoo. A built copy for revD is included.
+
+[comport] is a serial data transfer extern developed by Martin Peach: http://puredata.info/downloads/comport/releases/0.2. Again, a build of this extern is included. 
+
+In the tutorials folder you will find an html tutorial (called tutorial.xhtml) on installing Pd vanilla from the command line as well as getting started with [comport]. Example patches and Arduino sketches are included.
